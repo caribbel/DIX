@@ -1,0 +1,24 @@
+name: Update DIX Data Daily
+
+on:
+  schedule:
+    - cron: '0 12 * * *'  # Every day at 12:00 UTC
+  workflow_dispatch:  # Manual trigger
+
+jobs:
+  update-dix:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repo
+        uses: actions/checkout@v3
+
+      - name: Download DIX CSV
+        run: curl -o DIX.csv https://squeezemetrics.com/monitor/static/DIX.csv
+
+      - name: Commit & Push if Changed
+        run: |
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
+          git add DIX.csv
+          git diff --cached --quiet || git commit -m "Update DIX.csv"
+          git push
