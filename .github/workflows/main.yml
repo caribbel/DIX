@@ -2,8 +2,8 @@ name: Update DIX Data Daily
 
 on:
   schedule:
-    - cron: '45 14 * * *'  # Runs every day at 16:45 Valencia time (UTC+2)
-  workflow_dispatch:  # Manual trigger
+    - cron: '45 14 * * *'  # Runs at 16:45 Valencia time (14:45 UTC)
+  workflow_dispatch:
 
 jobs:
   update-dix:
@@ -19,9 +19,13 @@ jobs:
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
-          git config --global user.name 'github-actions[bot]'
-          git config --global user.email 'github-actions[bot]@users.noreply.github.com'
-          git remote set-url origin https://x-access-token:${GH_PAT}@github.com/caribbel/DIX.git
+          git config --global user.name "GitHub Actions"
+          git config --global user.email "github-actions@github.com"
+          git remote set-url origin https://x-access-token:$GH_PAT@github.com/caribbel/DIX.git
           git add DIX.csv
-          git diff --cached --quiet || git commit -m "Update DIX.csv"
-          git push origin main
+          if ! git diff --cached --quiet; then
+            git commit -m "Update DIX.csv"
+            git push origin main
+          else
+            echo "No changes to commit."
+          fi
