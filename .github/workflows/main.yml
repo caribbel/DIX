@@ -2,7 +2,7 @@ name: Update DIX Data Daily
 
 on:
   schedule:
-    - cron: '0 16 40 * *'  # Every day at 12:00 UTC
+    - cron: '45 16 * * *'  # Every day at 12:00 UTC
   workflow_dispatch:  # Manual trigger
 
 jobs:
