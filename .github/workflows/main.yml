@@ -2,13 +2,12 @@ name: Update DIX Data Daily
 
 on:
   schedule:
-    - cron: '00 15 * * *'  # Runs at 16:45 Europe/Madrid (UTC+2 = 14:45 UTC)
-  workflow_dispatch:  # Manual trigger option
+    - cron: '45 14 * * *'  # Runs every day at 16:45 Valencia time (UTC+2)
+  workflow_dispatch:  # Manual trigger
 
 jobs:
   update-dix:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
@@ -16,7 +15,7 @@ jobs:
       - name: Download DIX CSV
         run: curl -o DIX.csv https://squeezemetrics.com/monitor/static/DIX.csv
 
-          - name: Commit & Push if Changed
+      - name: Commit & Push if Changed
         env:
           GH_PAT: ${{ secrets.GH_PAT }}
         run: |
