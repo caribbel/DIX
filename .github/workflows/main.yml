@@ -21,8 +21,11 @@ jobs:
         run: |
           git config --global user.name "GitHub Actions"
           git config --global user.email "github-actions@github.com"
-          git clone https://x-access-token:$GH_PAT@github.com/caribbel/DIX.git
-          git remote set-url origin https://x-access-token:$GH_PAT@github.com/caribbel/DIX.git
+
+          # Set origin with personal access token
+          git remote remove origin
+          git remote add origin https://x-access-token:$GH_PAT@github.com/caribbel/DIX.git
+
           git add DIX.csv
           if ! git diff --cached --quiet; then
             git commit -m "Update DIX.csv"
