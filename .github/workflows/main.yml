@@ -11,6 +11,8 @@ jobs:
     steps:
       - name: Checkout Repo
         uses: actions/checkout@v3
+        with:
+          persist-credentials: false  # ✅ Disable default token so GH_PAT works
 
       - name: Download DIX CSV
         run: curl -o DIX.csv https://squeezemetrics.com/monitor/static/DIX.csv
