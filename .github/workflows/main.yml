@@ -2,7 +2,7 @@ name: Update DIX Data Daily
 
 on:
   schedule:
-    - cron: '36 11 * * *'  # Runs at 13:00 Valencia time (11:00 UTC)
+    - cron: '41 11 * * *'  # Runs at 13:00 Valencia time (11:00 UTC)
   workflow_dispatch:
 
 jobs:
